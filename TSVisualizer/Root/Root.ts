@@ -63,6 +63,8 @@ class Root implements IRoot {
 
         this.keys = new Array();
         this.inpMgr = new InputManager(this);
+
+        var test = new BasicSphere(this);
     }
 
     private setDefaults(options: IRootOptions): IRootOptions {
@@ -72,7 +74,7 @@ class Root implements IRoot {
 
         if (options.container == undefined || options.container.trim() == "") { options.container = "WebGLCanvas"; }
         if (options.fov == undefined) { options.fov = 45; }
-        if (options.camPosition == undefined) { options.camPosition = new THREE.Vector3(0, 10, 0); }
+        if (options.camPosition == undefined) { options.camPosition = new THREE.Vector3(0, 10, 0.1); }
         if (options.camIsPerspective == undefined) { options.camIsPerspective = true; }
 
         if (options.lockX == undefined) { options.lockX = false; }
@@ -90,6 +92,9 @@ class Root implements IRoot {
     log(message: string) {
         if (this.debugContainer != undefined) {
             this.debugContainer.innerText = message;
+        }
+        else {
+            console.log(message);
         }
     }
 

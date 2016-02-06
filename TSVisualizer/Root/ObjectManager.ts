@@ -15,7 +15,7 @@ class ObjectManager {
     // Methods
     update() {
         for (var i in this.objects) {
-            (<SimObject>i).update();
+            //(<SimObject>i).update();
         }
     }
 

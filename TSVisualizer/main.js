@@ -62,7 +62,6 @@ var ObjectManager = (function () {
     // Methods
     ObjectManager.prototype.update = function () {
         for (var i in this.objects) {
-            i.update();
         }
     };
     ObjectManager.prototype.add = function (toAdd) {
@@ -123,6 +122,7 @@ var Root = (function () {
         this.objMgr = new ObjectManager(this);
         this.keys = new Array();
         this.inpMgr = new InputManager(this);
+        var test = new BasicSphere(this);
     }
     Root.prototype.setDefaults = function (options) {
         if (options == undefined) {
@@ -135,7 +135,7 @@ var Root = (function () {
             options.fov = 45;
         }
         if (options.camPosition == undefined) {
-            options.camPosition = new THREE.Vector3(0, 10, 0);
+            options.camPosition = new THREE.Vector3(0, 10, 0.1);
         }
         if (options.camIsPerspective == undefined) {
             options.camIsPerspective = true;
@@ -157,6 +157,9 @@ var Root = (function () {
     Root.prototype.log = function (message) {
         if (this.debugContainer != undefined) {
             this.debugContainer.innerText = message;
+        }
+        else {
+            console.log(message);
         }
     };
     Root.prototype.windowResize = function () {
@@ -257,7 +260,7 @@ var BasicSphere = (function (_super) {
     __extends(BasicSphere, _super);
     function BasicSphere(root) {
         _super.call(this, root);
-        var sphereGeometry = new THREE.SphereGeometry(1);
+        var sphereGeometry = new THREE.SphereGeometry(1, 10, 10);
         var sphereMaterial = new THREE.MeshBasicMaterial({ color: 0x0088FF });
         this.mesh = new THREE.Mesh(sphereGeometry, sphereMaterial);
         this.addMe();
