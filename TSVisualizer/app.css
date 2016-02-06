@@ -1,7 +1,14 @@
-﻿body {
+﻿html, body {
+    height: 100%;
+    margin: 0;
     font-family: 'Segoe UI', sans-serif;
 }
 
-span {
-    font-style: italic;
+body {
+    background-color: #000000;
+    overflow: hidden;
+}
+
+#three_content {
+    min-height: 100%;
 }

@@ -24,10 +24,26 @@
   <ItemGroup>
     <Content Include="app.css" />
     <Content Include="index.html" />
+    <Content Include="js\jquery-1.12.0.js" />
+    <Content Include="js\jquery-1.12.0.min.js" />
+    <Content Include="js\threejs\three.js" />
+    <Content Include="js\threejs\three.min.js" />
+    <Content Include="js\Tween.js" />
     <Content Include="web.config" />
   </ItemGroup>
   <ItemGroup>
     <TypeScriptCompile Include="app.ts" />
+    <TypeScriptCompile Include="DefinitelyTyped\jquery.d.ts" />
+    <TypeScriptCompile Include="DefinitelyTyped\three.d.ts" />
+    <TypeScriptCompile Include="DefinitelyTyped\tween.js.d.ts" />
+    <TypeScriptCompile Include="Objects\BasicSphere.ts" />
+    <TypeScriptCompile Include="Objects\SimObject.ts" />
+    <TypeScriptCompile Include="Root\Includes.ts" />
+    <TypeScriptCompile Include="Root\InputManager.ts" />
+    <TypeScriptCompile Include="Root\IRoot.ts" />
+    <TypeScriptCompile Include="Root\ObjectManager.ts" />
+    <TypeScriptCompile Include="Root\Root.ts" />
+    <TypeScriptCompile Include="Root\TriggerEvent.ts" />
   </ItemGroup>
   <ItemGroup>
     <None Include="web.Debug.config">
@@ -37,6 +53,7 @@
       <DependentUpon>web.config</DependentUpon>
     </None>
   </ItemGroup>
+  <ItemGroup />
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">12.0</VisualStudioVersion>
   </PropertyGroup>
@@ -66,6 +83,17 @@
   <PropertyGroup Condition="'$(Configuration)' == 'Debug'">
     <TypeScriptRemoveComments>false</TypeScriptRemoveComments>
     <TypeScriptSourceMap>true</TypeScriptSourceMap>
+    <TypeScriptTarget>ES5</TypeScriptTarget>
+    <TypeScriptJSXEmit>None</TypeScriptJSXEmit>
+    <TypeScriptCompileOnSaveEnabled>True</TypeScriptCompileOnSaveEnabled>
+    <TypeScriptNoImplicitAny>False</TypeScriptNoImplicitAny>
+    <TypeScriptModuleKind>None</TypeScriptModuleKind>
+    <TypeScriptOutFile>main.js</TypeScriptOutFile>
+    <TypeScriptOutDir />
+    <TypeScriptGeneratesDeclarations>False</TypeScriptGeneratesDeclarations>
+    <TypeScriptNoEmitOnError>True</TypeScriptNoEmitOnError>
+    <TypeScriptMapRoot />
+    <TypeScriptSourceRoot />
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)' == 'Release'">
     <TypeScriptRemoveComments>true</TypeScriptRemoveComments>
