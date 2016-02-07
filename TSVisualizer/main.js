@@ -57,11 +57,12 @@ var ObjectManager = (function () {
     // Construct / Destruct
     function ObjectManager(newRoot) {
         this.root = newRoot;
-        this.objects = new Array();
+        this.objects = {};
     }
     // Methods
     ObjectManager.prototype.update = function () {
         for (var i in this.objects) {
+            this.objects[i].update();
         }
     };
     ObjectManager.prototype.add = function (toAdd) {
@@ -77,8 +78,9 @@ var ObjectManager = (function () {
 /// <reference path="../Root/Includes.ts" />
 var SimObject = (function () {
     // Constuct / Destruct
-    function SimObject(newRoot) {
+    function SimObject(newRoot, newId) {
         this.root = newRoot;
+        this.id = newId;
     }
     // Methods
     SimObject.prototype.update = function () {
@@ -122,7 +124,7 @@ var Root = (function () {
         this.objMgr = new ObjectManager(this);
         this.keys = new Array();
         this.inpMgr = new InputManager(this);
-        var test = new BasicSphere(this);
+        var test = new BasicSphere(this, 1);
     }
     Root.prototype.setDefaults = function (options) {
         if (options == undefined) {
@@ -258,13 +260,16 @@ var __extends = (this && this.__extends) || function (d, b) {
 };
 var BasicSphere = (function (_super) {
     __extends(BasicSphere, _super);
-    function BasicSphere(root) {
-        _super.call(this, root);
-        var sphereGeometry = new THREE.SphereGeometry(1, 10, 10);
+    function BasicSphere(root, newId) {
+        _super.call(this, root, newId);
+        var sphereGeometry = new THREE.SphereGeometry(1, 15, 15);
         var sphereMaterial = new THREE.MeshBasicMaterial({ color: 0x0088FF });
         this.mesh = new THREE.Mesh(sphereGeometry, sphereMaterial);
         this.addMe();
     }
+    BasicSphere.prototype.update = function () {
+        _super.prototype.update.call(this);
+    };
     return BasicSphere;
 })(SimObject);
 //interface ITriggerEvent<T> {

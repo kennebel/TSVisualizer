@@ -3,19 +3,18 @@
 class ObjectManager {
     // Properties
     root: IRoot;
-    objects: {};
+    objects: Object;
 
     // Construct / Destruct
     constructor(newRoot: IRoot) {
         this.root = newRoot;
-
-        this.objects = new Array();
+        this.objects = {};
     }
 
     // Methods
     update() {
         for (var i in this.objects) {
-            //(<SimObject>i).update();
+            (<SimObject>this.objects[i]).update();
         }
     }
 

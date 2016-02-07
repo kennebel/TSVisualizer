@@ -8,8 +8,9 @@ class SimObject {
     id: number;
 
     // Constuct / Destruct
-    constructor(newRoot: IRoot) {
+    constructor(newRoot: IRoot, newId: number) {
         this.root = newRoot;
+        this.id = newId;
     }
 
     // Methods

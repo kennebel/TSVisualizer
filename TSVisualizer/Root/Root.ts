@@ -64,7 +64,7 @@ class Root implements IRoot {
         this.keys = new Array();
         this.inpMgr = new InputManager(this);
 
-        var test = new BasicSphere(this);
+        var test = new BasicSphere(this, 1);
     }
 
     private setDefaults(options: IRootOptions): IRootOptions {
