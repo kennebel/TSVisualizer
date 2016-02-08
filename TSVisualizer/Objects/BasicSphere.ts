@@ -10,8 +10,4 @@ class BasicSphere extends SimObject {
         this.mesh = new THREE.Mesh(sphereGeometry, sphereMaterial);
         this.addMe();
     }
-
-    update() {
-        super.update();
-    }
 }

@@ -5,6 +5,8 @@ var settings: IRootOptions = {};
 window.onload = () => {
     root = new Root(settings);
     animateScene();
+
+    setInterval(() => root.updateFromSource(), 2000);
 };
 
 window.onresize = (event) => {

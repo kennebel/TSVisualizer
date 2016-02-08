@@ -6,4 +6,4 @@
 /// <reference path="../Root/InputManager.ts" />
 /// <reference path="../Root/ObjectManager.ts" />
 /// <reference path="../Objects/SimObject.ts" />
-
+/// <reference path="../Objects/ISourceObject.ts" />

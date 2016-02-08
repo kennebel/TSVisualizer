@@ -73,6 +73,16 @@ var ObjectManager = (function () {
             delete this.objects[toRemove.id];
         }
     };
+    ObjectManager.prototype.updateFromSource = function (toUpdate) {
+        var tu;
+        for (var i = 0; i < toUpdate.length; i++) {
+            tu = toUpdate[i];
+            if (this.objects[i] == undefined) {
+                this.add(new BasicSphere(this.root, tu.id));
+            }
+            this.objects[tu.id].updateFromSource(tu);
+        }
+    };
     return ObjectManager;
 })();
 /// <reference path="../Root/Includes.ts" />
@@ -91,6 +101,18 @@ var SimObject = (function () {
     SimObject.prototype.removeMe = function () {
         this.root.removeSimObject(this);
     };
+    SimObject.prototype.updateFromSource = function (update) {
+        this.updatePosition(update.position);
+        if (this.mesh.scale.x != update.scale) {
+            this.updateScale(update.scale);
+        }
+    };
+    SimObject.prototype.updatePosition = function (newPos) {
+        this.mesh.position.set(newPos[0], newPos[1], newPos[2]);
+    };
+    SimObject.prototype.updateScale = function (newScale) {
+        this.mesh.scale.set(newScale, newScale, newScale);
+    };
     return SimObject;
 })();
 /// <reference path="../DefinitelyTyped/three.d.ts" />
@@ -101,6 +123,7 @@ var SimObject = (function () {
 /// <reference path="../Root/InputManager.ts" />
 /// <reference path="../Root/ObjectManager.ts" />
 /// <reference path="../Objects/SimObject.ts" />
+/// <reference path="../Objects/ISourceObject.ts" />
 /// <reference path="Includes.ts" />
 var Root = (function () {
     /// Construct / Destruct
@@ -113,7 +136,7 @@ var Root = (function () {
         }
         this.log("startup");
         this.renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
-        this.renderer.setClearColor(0x000000, 0);
+        this.renderer.setClearColor(0x000000);
         this.windowResize();
         this.container.appendChild(this.renderer.domElement);
         this.scene = new THREE.Scene();
@@ -124,7 +147,7 @@ var Root = (function () {
         this.objMgr = new ObjectManager(this);
         this.keys = new Array();
         this.inpMgr = new InputManager(this);
-        var test = new BasicSphere(this, 1);
+        this.updateFromSource();
     }
     Root.prototype.setDefaults = function (options) {
         if (options == undefined) {
@@ -137,7 +160,7 @@ var Root = (function () {
             options.fov = 45;
         }
         if (options.camPosition == undefined) {
-            options.camPosition = new THREE.Vector3(0, 10, 0.1);
+            options.camPosition = new THREE.Vector3(0, 20, 0.1);
         }
         if (options.camIsPerspective == undefined) {
             options.camIsPerspective = true;
@@ -155,21 +178,10 @@ var Root = (function () {
     };
     Root.prototype.destructor = function () {
     };
-    /// Methods
-    Root.prototype.log = function (message) {
-        if (this.debugContainer != undefined) {
-            this.debugContainer.innerText = message;
-        }
-        else {
-            console.log(message);
-        }
-    };
+    /// Events
     Root.prototype.windowResize = function () {
-        this.canvasWidth = this.container.offsetWidth;
-        this.canvasHeight = this.container.offsetHeight;
-        // Used instead when you just want full screen
-        //this.canvasWidth = window.innerWidth;
-        //this.canvasHeight = window.innerHeight; 
+        this.canvasWidth = window.innerWidth;
+        this.canvasHeight = window.innerHeight;
         this.renderer.setSize(this.canvasWidth, this.canvasHeight);
         if (this.camera != null) {
             this.camera.aspect = this.canvasWidth / this.canvasHeight;
@@ -198,6 +210,19 @@ var Root = (function () {
         }
     };
     Root.prototype.keyUp = function (pressed) {
+    };
+    Root.prototype.updateFromSource = function () {
+        var _this = this;
+        $.getJSON("http://localhost/source.php", function (result) { _this.objMgr.updateFromSource(result); });
+    };
+    /// Methods
+    Root.prototype.log = function (message) {
+        if (this.debugContainer != undefined) {
+            this.debugContainer.innerText = message;
+        }
+        else {
+            console.log(message);
+        }
     };
     Root.prototype.addSimObject = function (toAdd) {
         this.objMgr.add(toAdd);
@@ -242,6 +267,7 @@ var settings = {};
 window.onload = function () {
     root = new Root(settings);
     animateScene();
+    setInterval(function () { return root.updateFromSource(); }, 2000);
 };
 window.onresize = function (event) {
     root.windowResize();
@@ -267,9 +293,6 @@ var BasicSphere = (function (_super) {
         this.mesh = new THREE.Mesh(sphereGeometry, sphereMaterial);
         this.addMe();
     }
-    BasicSphere.prototype.update = function () {
-        _super.prototype.update.call(this);
-    };
     return BasicSphere;
 })(SimObject);
 //interface ITriggerEvent<T> {

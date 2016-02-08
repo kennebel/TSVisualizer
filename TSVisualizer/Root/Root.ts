@@ -46,7 +46,7 @@ class Root implements IRoot {
         this.log("startup");
 
         this.renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true }); 
-        this.renderer.setClearColor(0x000000, 0); 
+        this.renderer.setClearColor(0x000000); 
 
         this.windowResize();
 
@@ -64,7 +64,7 @@ class Root implements IRoot {
         this.keys = new Array();
         this.inpMgr = new InputManager(this);
 
-        var test = new BasicSphere(this, 1);
+        this.updateFromSource();
     }
 
     private setDefaults(options: IRootOptions): IRootOptions {
@@ -74,7 +74,7 @@ class Root implements IRoot {
 
         if (options.container == undefined || options.container.trim() == "") { options.container = "WebGLCanvas"; }
         if (options.fov == undefined) { options.fov = 45; }
-        if (options.camPosition == undefined) { options.camPosition = new THREE.Vector3(0, 10, 0.1); }
+        if (options.camPosition == undefined) { options.camPosition = new THREE.Vector3(0, 20, 0.1); }
         if (options.camIsPerspective == undefined) { options.camIsPerspective = true; }
 
         if (options.lockX == undefined) { options.lockX = false; }
@@ -88,23 +88,10 @@ class Root implements IRoot {
         
     }
 
-    /// Methods
-    log(message: string) {
-        if (this.debugContainer != undefined) {
-            this.debugContainer.innerText = message;
-        }
-        else {
-            console.log(message);
-        }
-    }
-
+    /// Events
     windowResize() {
-        this.canvasWidth = this.container.offsetWidth;
-        this.canvasHeight = this.container.offsetHeight;
-
-        // Used instead when you just want full screen
-        //this.canvasWidth = window.innerWidth;
-        //this.canvasHeight = window.innerHeight; 
+        this.canvasWidth = window.innerWidth;
+        this.canvasHeight = window.innerHeight; 
 
         this.renderer.setSize(this.canvasWidth, this.canvasHeight); 
 
@@ -141,6 +128,20 @@ class Root implements IRoot {
     }
 
     keyUp(pressed: string): void {
+    }
+
+    updateFromSource() {
+        $.getJSON("http://localhost/source.php", result => { this.objMgr.updateFromSource(result); });
+    }
+
+    /// Methods
+    log(message: string) {
+        if (this.debugContainer != undefined) {
+            this.debugContainer.innerText = message;
+        }
+        else {
+            console.log(message);
+        }
     }
 
     addSimObject(toAdd: SimObject): void {

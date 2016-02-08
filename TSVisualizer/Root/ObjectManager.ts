@@ -27,4 +27,15 @@ class ObjectManager {
             delete this.objects[toRemove.id];
         }
     }
+
+    updateFromSource(toUpdate: ISourceObject[]) {
+        var tu: ISourceObject;
+        for (var i = 0; i < toUpdate.length; i++) {
+            tu = toUpdate[i];
+            if (this.objects[i] == undefined) {
+                this.add(new BasicSphere(this.root, tu.id));
+            }
+            (<SimObject>this.objects[tu.id]).updateFromSource(tu);
+        }
+    }
 }

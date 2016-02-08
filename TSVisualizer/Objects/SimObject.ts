@@ -24,4 +24,17 @@ class SimObject {
     removeMe() {
         this.root.removeSimObject(this);
     }
+
+    updateFromSource(update: ISourceObject) {
+        this.updatePosition(update.position);
+        if (this.mesh.scale.x != update.scale) { this.updateScale(update.scale); }
+    }
+
+    updatePosition(newPos: number[]) {
+        this.mesh.position.set(newPos[0], newPos[1], newPos[2]);
+    }
+
+    updateScale(newScale: number) {
+        this.mesh.scale.set(newScale, newScale, newScale);
+    }
 }
