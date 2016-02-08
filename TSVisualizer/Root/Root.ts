@@ -65,7 +65,7 @@ class Root implements IRoot {
         this.inpMgr = new InputManager(this);
 
         this.updateFromSource();
-        var tb: TestBox = new TestBox(this, 2);
+        //var tb: TestBox = new TestBox(this, 2, "test");
     }
 
     private setDefaults(options: IRootOptions): IRootOptions {
@@ -148,6 +148,7 @@ class Root implements IRoot {
     addSimObject(toAdd: SimObject): void {
         this.objMgr.add(toAdd);
         this.scene.add(toAdd.mesh);
+        //this.log("please add: " + toAdd.name);
     }
 
     removeSimObject(toRemove: SimObject): void {
@@ -182,5 +183,7 @@ class Root implements IRoot {
                 this.camera.position.z += step;
             }
         }
+
+        //this.log("COunt: " + this.scene.children.length);
     }
 }

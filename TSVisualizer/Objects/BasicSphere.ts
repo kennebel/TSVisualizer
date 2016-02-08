@@ -1,8 +1,8 @@
 ﻿/// <reference path="../Root/Includes.ts" />
 
 class BasicSphere extends SimObject {
-    constructor(root: IRoot, newId: number) {
-        super(root, newId);
+    constructor(root: IRoot, newId: number, newName: string) {
+        super(root, newId, newName);
 
         var sphereGeometry = new THREE.SphereGeometry(1, 15, 15);
         var sphereMaterial = new THREE.MeshBasicMaterial({ color: 0x0088FF });

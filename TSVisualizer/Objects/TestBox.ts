@@ -1,8 +1,8 @@
 ﻿/// <reference path="../Root/Includes.ts" />
 
 class TestBox extends SimObject {
-    constructor(root: IRoot, newId: number) {
-        super(root, newId);
+    constructor(root: IRoot, newId: number, newName: string) {
+        super(root, newId, newName);
 
         var boxGeometry = new THREE.BoxGeometry(5, 5, 5);
         var boxMaterial = new THREE.MeshBasicMaterial({ color: 0x00FF88 });

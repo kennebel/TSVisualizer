@@ -32,8 +32,8 @@ class ObjectManager {
         var tu: ISourceObject;
         for (var i = 0; i < toUpdate.length; i++) {
             tu = toUpdate[i];
-            if (this.objects[i] == undefined) {
-                this.add(new BasicSphere(this.root, tu.id));
+            if (this.objects[tu.id] == undefined) {
+                this.add(new BasicSphere(this.root, tu.id, tu.name));
             }
             (<SimObject>this.objects[tu.id]).updateFromSource(tu);
         }

@@ -77,8 +77,8 @@ var ObjectManager = (function () {
         var tu;
         for (var i = 0; i < toUpdate.length; i++) {
             tu = toUpdate[i];
-            if (this.objects[i] == undefined) {
-                this.add(new BasicSphere(this.root, tu.id));
+            if (this.objects[tu.id] == undefined) {
+                this.add(new BasicSphere(this.root, tu.id, tu.name));
             }
             this.objects[tu.id].updateFromSource(tu);
         }
@@ -88,9 +88,10 @@ var ObjectManager = (function () {
 /// <reference path="../Root/Includes.ts" />
 var SimObject = (function () {
     // Constuct / Destruct
-    function SimObject(newRoot, newId) {
+    function SimObject(newRoot, newId, newName) {
         this.root = newRoot;
         this.id = newId;
+        this.name = newName;
     }
     // Methods
     SimObject.prototype.update = function () {
@@ -123,8 +124,8 @@ var __extends = (this && this.__extends) || function (d, b) {
 };
 var BasicSphere = (function (_super) {
     __extends(BasicSphere, _super);
-    function BasicSphere(root, newId) {
-        _super.call(this, root, newId);
+    function BasicSphere(root, newId, newName) {
+        _super.call(this, root, newId, newName);
         var sphereGeometry = new THREE.SphereGeometry(1, 15, 15);
         var sphereMaterial = new THREE.MeshBasicMaterial({ color: 0x0088FF });
         this.mesh = new THREE.Mesh(sphereGeometry, sphereMaterial);
@@ -135,8 +136,8 @@ var BasicSphere = (function (_super) {
 /// <reference path="../Root/Includes.ts" />
 var TestBox = (function (_super) {
     __extends(TestBox, _super);
-    function TestBox(root, newId) {
-        _super.call(this, root, newId);
+    function TestBox(root, newId, newName) {
+        _super.call(this, root, newId, newName);
         var boxGeometry = new THREE.BoxGeometry(5, 5, 5);
         var boxMaterial = new THREE.MeshBasicMaterial({ color: 0x00FF88 });
         this.mesh = new THREE.Mesh(boxGeometry, boxMaterial);
@@ -184,7 +185,7 @@ var Root = (function () {
         this.keys = new Array();
         this.inpMgr = new InputManager(this);
         this.updateFromSource();
-        var tb = new TestBox(this, 2);
+        //var tb: TestBox = new TestBox(this, 2, "test");
     }
     Root.prototype.setDefaults = function (options) {
         if (options == undefined) {
@@ -264,6 +265,7 @@ var Root = (function () {
     Root.prototype.addSimObject = function (toAdd) {
         this.objMgr.add(toAdd);
         this.scene.add(toAdd.mesh);
+        //this.log("please add: " + toAdd.name);
     };
     Root.prototype.removeSimObject = function (toRemove) {
         this.objMgr.remove(toRemove);
@@ -295,6 +297,7 @@ var Root = (function () {
                 this.camera.position.z += step;
             }
         }
+        //this.log("COunt: " + this.scene.children.length);
     };
     return Root;
 })();
@@ -304,7 +307,7 @@ var settings = {};
 window.onload = function () {
     root = new Root(settings);
     animateScene();
-    setInterval(function () { return root.updateFromSource(); }, 2000);
+    setInterval(function () { return root.updateFromSource(); }, 500);
 };
 window.onresize = function (event) {
     root.windowResize();

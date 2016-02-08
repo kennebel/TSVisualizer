@@ -6,7 +6,7 @@ window.onload = () => {
     root = new Root(settings);
     animateScene();
 
-    setInterval(() => root.updateFromSource(), 2000);
+    setInterval(() => root.updateFromSource(), 500);
 };
 
 window.onresize = (event) => {

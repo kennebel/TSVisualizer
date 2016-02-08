@@ -6,11 +6,13 @@ class SimObject {
     mesh: THREE.Mesh;
 
     id: number;
+    name: string;
 
     // Constuct / Destruct
-    constructor(newRoot: IRoot, newId: number) {
+    constructor(newRoot: IRoot, newId: number, newName: string) {
         this.root = newRoot;
         this.id = newId;
+        this.name = newName;
     }
 
     // Methods
