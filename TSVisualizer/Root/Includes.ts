@@ -7,3 +7,5 @@
 /// <reference path="../Root/ObjectManager.ts" />
 /// <reference path="../Objects/SimObject.ts" />
 /// <reference path="../Objects/ISourceObject.ts" />
+/// <reference path="../Objects/BasicSphere.ts" />
+/// <reference path="../Objects/TestBox.ts" />

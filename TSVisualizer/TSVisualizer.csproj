@@ -39,6 +39,7 @@
     <TypeScriptCompile Include="Objects\BasicSphere.ts" />
     <TypeScriptCompile Include="Objects\ISourceObject.ts" />
     <TypeScriptCompile Include="Objects\SimObject.ts" />
+    <TypeScriptCompile Include="Objects\TestBox.ts" />
     <TypeScriptCompile Include="Root\Includes.ts" />
     <TypeScriptCompile Include="Root\InputManager.ts" />
     <TypeScriptCompile Include="Root\IRoot.ts" />

@@ -45,8 +45,8 @@ class Root implements IRoot {
 
         this.log("startup");
 
-        this.renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true }); 
-        this.renderer.setClearColor(0x000000); 
+        this.renderer = new THREE.WebGLRenderer({ antialias: true }); 
+        this.renderer.setClearColor(0x000000, 1); 
 
         this.windowResize();
 
@@ -65,6 +65,7 @@ class Root implements IRoot {
         this.inpMgr = new InputManager(this);
 
         this.updateFromSource();
+        var tb: TestBox = new TestBox(this, 2);
     }
 
     private setDefaults(options: IRootOptions): IRootOptions {
@@ -74,7 +75,7 @@ class Root implements IRoot {
 
         if (options.container == undefined || options.container.trim() == "") { options.container = "WebGLCanvas"; }
         if (options.fov == undefined) { options.fov = 45; }
-        if (options.camPosition == undefined) { options.camPosition = new THREE.Vector3(0, 20, 0.1); }
+        if (options.camPosition == undefined) { options.camPosition = new THREE.Vector3(0, 40, 0.1); }
         if (options.camIsPerspective == undefined) { options.camIsPerspective = true; }
 
         if (options.lockX == undefined) { options.lockX = false; }

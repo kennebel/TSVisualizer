@@ -115,6 +115,40 @@ var SimObject = (function () {
     };
     return SimObject;
 })();
+/// <reference path="../Root/Includes.ts" />
+var __extends = (this && this.__extends) || function (d, b) {
+    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
+    function __() { this.constructor = d; }
+    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+};
+var BasicSphere = (function (_super) {
+    __extends(BasicSphere, _super);
+    function BasicSphere(root, newId) {
+        _super.call(this, root, newId);
+        var sphereGeometry = new THREE.SphereGeometry(1, 15, 15);
+        var sphereMaterial = new THREE.MeshBasicMaterial({ color: 0x0088FF });
+        this.mesh = new THREE.Mesh(sphereGeometry, sphereMaterial);
+        this.addMe();
+    }
+    return BasicSphere;
+})(SimObject);
+/// <reference path="../Root/Includes.ts" />
+var TestBox = (function (_super) {
+    __extends(TestBox, _super);
+    function TestBox(root, newId) {
+        _super.call(this, root, newId);
+        var boxGeometry = new THREE.BoxGeometry(5, 5, 5);
+        var boxMaterial = new THREE.MeshBasicMaterial({ color: 0x00FF88 });
+        this.mesh = new THREE.Mesh(boxGeometry, boxMaterial);
+        this.addMe();
+    }
+    TestBox.prototype.update = function () {
+        _super.prototype.update.call(this);
+        var pos = this.mesh.position;
+        this.mesh.position.set(pos.x + 0.01, pos.y, pos.z);
+    };
+    return TestBox;
+})(SimObject);
 /// <reference path="../DefinitelyTyped/three.d.ts" />
 /// <reference path="../DefinitelyTyped/tween.js.d.ts" />
 /// <reference path="../DefinitelyTyped/jquery.d.ts" />
@@ -124,6 +158,8 @@ var SimObject = (function () {
 /// <reference path="../Root/ObjectManager.ts" />
 /// <reference path="../Objects/SimObject.ts" />
 /// <reference path="../Objects/ISourceObject.ts" />
+/// <reference path="../Objects/BasicSphere.ts" />
+/// <reference path="../Objects/TestBox.ts" />
 /// <reference path="Includes.ts" />
 var Root = (function () {
     /// Construct / Destruct
@@ -135,8 +171,8 @@ var Root = (function () {
             this.debugContainer = document.getElementById(this.options.debugContainer);
         }
         this.log("startup");
-        this.renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
-        this.renderer.setClearColor(0x000000);
+        this.renderer = new THREE.WebGLRenderer({ antialias: true });
+        this.renderer.setClearColor(0x000000, 1);
         this.windowResize();
         this.container.appendChild(this.renderer.domElement);
         this.scene = new THREE.Scene();
@@ -148,6 +184,7 @@ var Root = (function () {
         this.keys = new Array();
         this.inpMgr = new InputManager(this);
         this.updateFromSource();
+        var tb = new TestBox(this, 2);
     }
     Root.prototype.setDefaults = function (options) {
         if (options == undefined) {
@@ -160,7 +197,7 @@ var Root = (function () {
             options.fov = 45;
         }
         if (options.camPosition == undefined) {
-            options.camPosition = new THREE.Vector3(0, 20, 0.1);
+            options.camPosition = new THREE.Vector3(0, 40, 0.1);
         }
         if (options.camIsPerspective == undefined) {
             options.camIsPerspective = true;
@@ -278,23 +315,6 @@ function animateScene() {
     root.animateScene();
     requestAnimationFrame(animateScene);
 }
-/// <reference path="../Root/Includes.ts" />
-var __extends = (this && this.__extends) || function (d, b) {
-    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
-    function __() { this.constructor = d; }
-    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-};
-var BasicSphere = (function (_super) {
-    __extends(BasicSphere, _super);
-    function BasicSphere(root, newId) {
-        _super.call(this, root, newId);
-        var sphereGeometry = new THREE.SphereGeometry(1, 15, 15);
-        var sphereMaterial = new THREE.MeshBasicMaterial({ color: 0x0088FF });
-        this.mesh = new THREE.Mesh(sphereGeometry, sphereMaterial);
-        this.addMe();
-    }
-    return BasicSphere;
-})(SimObject);
 //interface ITriggerEvent<T> {
 //    on(handler: { (data?: T): void });
 //    off(handler: { (data?: T): void });
