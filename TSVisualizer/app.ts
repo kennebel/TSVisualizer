@@ -15,6 +15,8 @@ window.onresize = (event) => {
 
 document.addEventListener("keydown", (event) => { /*console.log(event);*/ root.inpMgr.keyPressed(event) });
 document.addEventListener("keyup", (event) => { /*console.log(event);*/ root.inpMgr.keyReleased(event) });
+document.addEventListener("mousedown", (event) => { root.mouseDown(event) });
+document.addEventListener("mouseup", (event) => { root.mouseUp(event) });
 
 function animateScene() {
     root.animateScene();

@@ -39,4 +39,12 @@ class SimObject {
     updateScale(newScale: number) {
         this.mesh.scale.set(newScale, newScale, newScale);
     }
+
+    select() {
+        root.log("I'm clicked: " + this.name + "(" + this.id + ")");
+    }
+
+    unselect() {
+        root.log("Bye Bye: " + this.name + "(" + this.id + ")");
+    }
 }

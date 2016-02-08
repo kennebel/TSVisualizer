@@ -21,11 +21,13 @@ class Root implements IRoot {
     renderer: THREE.WebGLRenderer;
     scene: THREE.Scene;
     camera: THREE.PerspectiveCamera;
+    raycaster: THREE.Raycaster;
 
     options: IRootOptions;
 
     canvasWidth: number;
     canvasHeight: number;
+    mousePos: THREE.Vector2;
 
     objMgr: ObjectManager;
     inpMgr: InputManager;
@@ -46,7 +48,10 @@ class Root implements IRoot {
         this.log("startup");
 
         this.renderer = new THREE.WebGLRenderer({ antialias: true }); 
-        this.renderer.setClearColor(0x000000, 1); 
+        this.renderer.setClearColor(0x000000, 1);
+        this.raycaster = new THREE.Raycaster();
+
+        this.mousePos = new THREE.Vector2();
 
         this.windowResize();
 
@@ -129,6 +134,25 @@ class Root implements IRoot {
     }
 
     keyUp(pressed: string): void {
+    }
+
+    mouseDown(event: MouseEvent): void {
+        this.mousePos.x = (event.clientX / window.innerWidth) * 2 - 1;
+        this.mousePos.y = - (event.clientY / window.innerHeight) * 2 + 1;
+
+        this.raycaster.setFromCamera(this.mousePos, this.camera);
+
+        var intersects = this.raycaster.intersectObjects(this.scene.children);
+
+        if (intersects.length > 0) {
+            this.objMgr.select(parseInt(intersects[0].object.name));
+        }
+        else {
+            this.objMgr.select(0); // Clear selection
+        }
+    }
+
+    mouseUp(event: MouseEvent): void {
     }
 
     updateFromSource() {

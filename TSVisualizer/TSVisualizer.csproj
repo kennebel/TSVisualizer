@@ -29,6 +29,7 @@
     <Content Include="js\threejs\three.js" />
     <Content Include="js\threejs\three.min.js" />
     <Content Include="js\Tween.js" />
+    <Content Include="Notes\ThreeJS_DraggableCubes.txt" />
     <Content Include="web.config" />
   </ItemGroup>
   <ItemGroup>

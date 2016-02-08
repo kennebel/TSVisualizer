@@ -58,6 +58,7 @@ var ObjectManager = (function () {
     function ObjectManager(newRoot) {
         this.root = newRoot;
         this.objects = {};
+        this.selected = 0;
     }
     // Methods
     ObjectManager.prototype.update = function () {
@@ -81,6 +82,17 @@ var ObjectManager = (function () {
                 this.add(new BasicSphere(this.root, tu.id, tu.name));
             }
             this.objects[tu.id].updateFromSource(tu);
+        }
+    };
+    ObjectManager.prototype.select = function (toSelect) {
+        if (toSelect != this.selected) {
+            if (this.selected != 0 && this.objects[this.selected] != undefined) {
+                this.objects[this.selected].unselect();
+            }
+            this.selected = toSelect;
+            if (this.selected != 0) {
+                this.objects[this.selected].select();
+            }
         }
     };
     return ObjectManager;
@@ -114,6 +126,12 @@ var SimObject = (function () {
     SimObject.prototype.updateScale = function (newScale) {
         this.mesh.scale.set(newScale, newScale, newScale);
     };
+    SimObject.prototype.select = function () {
+        root.log("I'm clicked: " + this.name + "(" + this.id + ")");
+    };
+    SimObject.prototype.unselect = function () {
+        root.log("Bye Bye: " + this.name + "(" + this.id + ")");
+    };
     return SimObject;
 })();
 /// <reference path="../Root/Includes.ts" />
@@ -129,6 +147,7 @@ var BasicSphere = (function (_super) {
         var sphereGeometry = new THREE.SphereGeometry(1, 15, 15);
         var sphereMaterial = new THREE.MeshBasicMaterial({ color: 0x0088FF });
         this.mesh = new THREE.Mesh(sphereGeometry, sphereMaterial);
+        this.mesh.name = String(newId);
         this.addMe();
     }
     return BasicSphere;
@@ -174,6 +193,8 @@ var Root = (function () {
         this.log("startup");
         this.renderer = new THREE.WebGLRenderer({ antialias: true });
         this.renderer.setClearColor(0x000000, 1);
+        this.raycaster = new THREE.Raycaster();
+        this.mousePos = new THREE.Vector2();
         this.windowResize();
         this.container.appendChild(this.renderer.domElement);
         this.scene = new THREE.Scene();
@@ -249,6 +270,20 @@ var Root = (function () {
     };
     Root.prototype.keyUp = function (pressed) {
     };
+    Root.prototype.mouseDown = function (event) {
+        this.mousePos.x = (event.clientX / window.innerWidth) * 2 - 1;
+        this.mousePos.y = -(event.clientY / window.innerHeight) * 2 + 1;
+        this.raycaster.setFromCamera(this.mousePos, this.camera);
+        var intersects = this.raycaster.intersectObjects(this.scene.children);
+        if (intersects.length > 0) {
+            this.objMgr.select(parseInt(intersects[0].object.name));
+        }
+        else {
+            this.objMgr.select(0); // Clear selection
+        }
+    };
+    Root.prototype.mouseUp = function (event) {
+    };
     Root.prototype.updateFromSource = function () {
         var _this = this;
         $.getJSON("http://localhost/source.php", function (result) { _this.objMgr.updateFromSource(result); });
@@ -314,6 +349,8 @@ window.onresize = function (event) {
 };
 document.addEventListener("keydown", function (event) { root.inpMgr.keyPressed(event); });
 document.addEventListener("keyup", function (event) { root.inpMgr.keyReleased(event); });
+document.addEventListener("mousedown", function (event) { root.mouseDown(event); });
+document.addEventListener("mouseup", function (event) { root.mouseUp(event); });
 function animateScene() {
     root.animateScene();
     requestAnimationFrame(animateScene);

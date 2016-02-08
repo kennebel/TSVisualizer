@@ -8,6 +8,7 @@ class BasicSphere extends SimObject {
         var sphereMaterial = new THREE.MeshBasicMaterial({ color: 0x0088FF });
 
         this.mesh = new THREE.Mesh(sphereGeometry, sphereMaterial);
+        this.mesh.name = String(newId);
         this.addMe();
     }
 }
