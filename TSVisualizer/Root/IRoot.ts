@@ -10,4 +10,6 @@
     // Methods
     addSimObject(toAdd: SimObject): void;
     removeSimObject(toRemove: SimObject): void;
+    addTemp(toAdd: THREE.Object3D): void;
+    removeTemp(toREmove: THREE.Object3D): void;
 }

@@ -122,15 +122,27 @@ var SimObject = (function () {
     };
     SimObject.prototype.updatePosition = function (newPos) {
         this.mesh.position.set(newPos[0], newPos[1], newPos[2]);
+        if (this.selected != undefined) {
+            this.selected.update(this.mesh);
+        }
     };
     SimObject.prototype.updateScale = function (newScale) {
         this.mesh.scale.set(newScale, newScale, newScale);
+        if (this.selected != undefined) {
+            this.selected.update(this.mesh);
+        }
     };
     SimObject.prototype.select = function () {
-        root.log("I'm clicked: " + this.name + "(" + this.id + ")");
+        if (this.selected == undefined) {
+            this.selected = new THREE.BoxHelper(this.mesh);
+            this.root.addTemp(this.selected);
+        }
     };
     SimObject.prototype.unselect = function () {
-        root.log("Bye Bye: " + this.name + "(" + this.id + ")");
+        if (this.selected != undefined) {
+            this.root.removeTemp(this.selected);
+            this.selected = undefined;
+        }
     };
     return SimObject;
 })();
@@ -284,6 +296,9 @@ var Root = (function () {
     };
     Root.prototype.mouseUp = function (event) {
     };
+    Root.prototype.mouseWheel = function (event) {
+        this.log(String(event.wheelDelta));
+    };
     Root.prototype.updateFromSource = function () {
         var _this = this;
         $.getJSON("http://localhost/source.php", function (result) { _this.objMgr.updateFromSource(result); });
@@ -305,6 +320,12 @@ var Root = (function () {
     Root.prototype.removeSimObject = function (toRemove) {
         this.objMgr.remove(toRemove);
         this.scene.remove(toRemove.mesh);
+    };
+    Root.prototype.addTemp = function (toAdd) {
+        this.scene.add(toAdd);
+    };
+    Root.prototype.removeTemp = function (toRemove) {
+        this.scene.remove(toRemove);
     };
     Root.prototype.resetCamera = function () {
         this.camera.position.set(this.camDefaultPos.x, this.camDefaultPos.y, this.camDefaultPos.z);
@@ -351,6 +372,7 @@ document.addEventListener("keydown", function (event) { root.inpMgr.keyPressed(e
 document.addEventListener("keyup", function (event) { root.inpMgr.keyReleased(event); });
 document.addEventListener("mousedown", function (event) { root.mouseDown(event); });
 document.addEventListener("mouseup", function (event) { root.mouseUp(event); });
+document.addEventListener("mousewheel", function (event) { console.log(event); root.mouseWheel(event); });
 function animateScene() {
     root.animateScene();
     requestAnimationFrame(animateScene);

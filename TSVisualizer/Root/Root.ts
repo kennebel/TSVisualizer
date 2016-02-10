@@ -155,6 +155,10 @@ class Root implements IRoot {
     mouseUp(event: MouseEvent): void {
     }
 
+    mouseWheel(event: MouseWheelEvent): void {
+        this.log(String(event.wheelDelta));
+    }
+
     updateFromSource() {
         $.getJSON("http://localhost/source.php", result => { this.objMgr.updateFromSource(result); });
     }
@@ -178,6 +182,14 @@ class Root implements IRoot {
     removeSimObject(toRemove: SimObject): void {
         this.objMgr.remove(toRemove);
         this.scene.remove(toRemove.mesh);
+    }
+
+    addTemp(toAdd: THREE.Object3D): void {
+        this.scene.add(toAdd);
+    }
+
+    removeTemp(toRemove: THREE.Object3D): void {
+        this.scene.remove(toRemove);
     }
 
     resetCamera(): void {

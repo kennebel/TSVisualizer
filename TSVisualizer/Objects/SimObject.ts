@@ -4,6 +4,7 @@ class SimObject {
     // Properties
     root: IRoot;
     mesh: THREE.Mesh;
+    selected: THREE.BoxHelper;
 
     id: number;
     name: string;
@@ -34,17 +35,29 @@ class SimObject {
 
     updatePosition(newPos: number[]) {
         this.mesh.position.set(newPos[0], newPos[1], newPos[2]);
+        if (this.selected != undefined) {
+            this.selected.update(this.mesh);
+        }
     }
 
     updateScale(newScale: number) {
         this.mesh.scale.set(newScale, newScale, newScale);
+        if (this.selected != undefined) {
+            this.selected.update(this.mesh);
+        }
     }
 
     select() {
-        root.log("I'm clicked: " + this.name + "(" + this.id + ")");
+        if (this.selected == undefined) {
+            this.selected = new THREE.BoxHelper(this.mesh);
+            this.root.addTemp(this.selected);
+        }
     }
 
     unselect() {
-        root.log("Bye Bye: " + this.name + "(" + this.id + ")");
+        if (this.selected != undefined) {
+            this.root.removeTemp(this.selected);
+            this.selected = undefined;
+        }
     }
 }
