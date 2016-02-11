@@ -50,6 +50,9 @@ class ObjectManager {
             if (this.selected != 0) {
                 (<SimObject>this.objects[this.selected]).select();
             }
+            else {
+                this.root.log("");
+            }
         }
     }
 }

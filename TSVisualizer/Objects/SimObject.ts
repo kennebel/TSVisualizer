@@ -51,6 +51,7 @@ class SimObject {
         if (this.selected == undefined) {
             this.selected = new THREE.BoxHelper(this.mesh);
             this.root.addTemp(this.selected);
+            this.root.log("Selected: " + this.name);
         }
     }
 

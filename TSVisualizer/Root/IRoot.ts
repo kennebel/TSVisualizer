@@ -8,6 +8,7 @@
     keyUp(pressed: string): void;
 
     // Methods
+    log(message: string): void;
     addSimObject(toAdd: SimObject): void;
     removeSimObject(toRemove: SimObject): void;
     addTemp(toAdd: THREE.Object3D): void;

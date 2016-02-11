@@ -93,6 +93,9 @@ var ObjectManager = (function () {
             if (this.selected != 0) {
                 this.objects[this.selected].select();
             }
+            else {
+                this.root.log("");
+            }
         }
     };
     return ObjectManager;
@@ -136,6 +139,7 @@ var SimObject = (function () {
         if (this.selected == undefined) {
             this.selected = new THREE.BoxHelper(this.mesh);
             this.root.addTemp(this.selected);
+            this.root.log("Selected: " + this.name);
         }
     };
     SimObject.prototype.unselect = function () {

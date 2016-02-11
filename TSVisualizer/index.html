@@ -9,11 +9,69 @@
     <script src="js/Tween.js"></script>
     <script src="js/jquery-1.12.0.min.js"></script>
     <script src="main.js"></script>
+    <style type="text/css">
+        html, body {
+            height: 100%;
+            margin: 0;
+        }
+
+        body {
+            /* Set the background color of the HTML page to black */
+            background-color: #000000;
+            /* Hide oversized content. This prevents the scroll bars. */
+            overflow: hidden;
+        }
+
+        #three_content {
+            position: absolute;
+            z-index: 0;
+            left: 0;
+            top: 0;
+        }
+
+        #overlay {
+            position: absolute;
+            z-index: 10;
+            left: 0;
+            bottom: 0;
+            width: 100%;
+        }
+
+        #bottom_menu {
+            width: 100%;
+            height: 75px;
+        }
+
+        #debug {
+            position: absolute;
+            z-index: 100;
+            right: 5px;
+            top: 5px;
+            color: white;
+        }
+    </style>
 </head>
 <body>
     <div id="three_content"></div>
+    <div id="overlay">
+        <table id="bottom_menu">
+            <tbody>
+                <tr>
+                    <td style="background-color: darkred; width: 15%;" onclick="ui('dr');">&nbsp;</td>
+                    <td style="background-color: red; width: 15%;" onclick="ui('r');">&nbsp;</td>
+                    <td style="background-color: darkgreen;" onclick="ui('dg');">&nbsp;</td>
+                    <td style="background-color: green; width: 20%;" onclick="ui('g');">&nbsp;</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div id="debug"></div>
     <script>
-        settings = { container: "three_content" };
+        settings = { container: "three_content", debugContainer: "debug" };
+
+        function ui(which) {
+            root.log("Clicked: " + which);
+        }
     </script>
 </body>
 </html>
