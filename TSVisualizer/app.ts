@@ -1,4 +1,4 @@
-﻿/// <reference path="Root/Root.ts" />
+﻿/// <reference path="TS/Root/Root.ts" />
 
 var root: Root;
 var settings: IRootOptions = {};

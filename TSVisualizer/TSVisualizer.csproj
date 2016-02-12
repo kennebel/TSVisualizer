@@ -34,19 +34,19 @@
   </ItemGroup>
   <ItemGroup>
     <TypeScriptCompile Include="app.ts" />
-    <TypeScriptCompile Include="DefinitelyTyped\jquery.d.ts" />
-    <TypeScriptCompile Include="DefinitelyTyped\three.d.ts" />
-    <TypeScriptCompile Include="DefinitelyTyped\tween.js.d.ts" />
-    <TypeScriptCompile Include="Objects\BasicSphere.ts" />
-    <TypeScriptCompile Include="Objects\ISourceObject.ts" />
-    <TypeScriptCompile Include="Objects\SimObject.ts" />
-    <TypeScriptCompile Include="Objects\TestBox.ts" />
-    <TypeScriptCompile Include="Root\Includes.ts" />
-    <TypeScriptCompile Include="Root\InputManager.ts" />
-    <TypeScriptCompile Include="Root\IRoot.ts" />
-    <TypeScriptCompile Include="Root\ObjectManager.ts" />
-    <TypeScriptCompile Include="Root\Root.ts" />
-    <TypeScriptCompile Include="Root\TriggerEvent.ts" />
+    <TypeScriptCompile Include="TS\DefinitelyTyped\jquery.d.ts" />
+    <TypeScriptCompile Include="TS\DefinitelyTyped\three.d.ts" />
+    <TypeScriptCompile Include="TS\DefinitelyTyped\tween.js.d.ts" />
+    <TypeScriptCompile Include="TS\Objects\BasicSphere.ts" />
+    <TypeScriptCompile Include="TS\Objects\ISourceObject.ts" />
+    <TypeScriptCompile Include="TS\Objects\SimObject.ts" />
+    <TypeScriptCompile Include="TS\Objects\TestBox.ts" />
+    <TypeScriptCompile Include="TS\Root\Includes.ts" />
+    <TypeScriptCompile Include="TS\Root\InputManager.ts" />
+    <TypeScriptCompile Include="TS\Root\IRoot.ts" />
+    <TypeScriptCompile Include="TS\Root\ObjectManager.ts" />
+    <TypeScriptCompile Include="TS\Root\Root.ts" />
+    <TypeScriptCompile Include="TS\Root\TriggerEvent.ts" />
   </ItemGroup>
   <ItemGroup>
     <None Include="web.Debug.config">
